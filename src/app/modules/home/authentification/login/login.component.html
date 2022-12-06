@@ -1,0 +1,29 @@
+<div class="login">
+
+  <h1>Login</h1>
+
+  <form class="form" [formGroup]="form">
+
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter Name" value="" formControlName="name">
+      <mat-error *ngIf="form.controls.name.hasError('required')">
+        Name required!
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Enter Password" value="" type="password" formControlName="password">
+      <mat-error *ngIf="form.controls.password.hasError('required')">
+        Password required!
+      </mat-error>
+    </mat-form-field>
+
+    <p>Don't have an account? <a routerLink="../registration" class="form__link">Register</a></p>
+
+  </form>
+
+  <button mat-raised-button color="primary" (click)="login()">Login</button>
+
+</div>

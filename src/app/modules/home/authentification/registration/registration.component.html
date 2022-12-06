@@ -1,0 +1,56 @@
+<div class="registration">
+
+  <h1>Registration</h1>
+
+  <form class="form" [formGroup]="form">
+
+    <mat-form-field class="full-width">
+      <mat-label>Name</mat-label>
+      <input matInput placeholder="Enter Name" value="" formControlName="name">
+      <mat-error *ngIf="form.controls.name.hasError('required')" [errorStateMatcher]="matcher">
+        Name required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Last Name</mat-label>
+      <input matInput placeholder="Enter Last Name" value="" formControlName="lastName">
+      <mat-error *ngIf="form.controls.lastName.hasError('required')" [errorStateMatcher]="matcher">
+        Last Name required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>E-Mail</mat-label>
+      <input matInput placeholder="Enter E-Mail" value="" formControlName="email">
+      <mat-error *ngIf="form.controls.email.hasError('required')" [errorStateMatcher]="matcher">
+        E-Mail required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Password</mat-label>
+      <input matInput placeholder="Enter Password" value="" type="password" formControlName="password">
+      <mat-error *ngIf="form.controls.password.hasError('required')" [errorStateMatcher]="matcher">
+        Password required.
+      </mat-error>
+      <mat-error *ngIf="form.controls.password.hasError('minlength')" [errorStateMatcher]="matcher">
+        Password too short.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>Confirm Password</mat-label>
+      <input matInput placeholder="Enter Password Again" value="" type="password" formControlName="confirmPassword">
+      <mat-error *ngIf="form.controls.confirmPassword.hasError('passwordConfirmed')">
+        Password doesn't match!
+      </mat-error>
+    </mat-form-field>
+
+    <p>Already have an account? <a routerLink="../login" class="form__link">Login</a></p>
+
+  </form>
+
+  <button mat-raised-button color="primary" (click)="register()">Register</button>
+
+</div>
