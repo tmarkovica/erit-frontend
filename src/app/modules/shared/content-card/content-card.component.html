@@ -1,17 +1,10 @@
-<!-- <div class="content-card">
-
-  <h2>{{content.attributes.title}}</h2>
-  <p>{{content.attributes.editor}}</p>
-
-</div> -->
-
 <mat-card class="card">
   <mat-card-header>
-    <div mat-card-avatar class="header-image"></div>
+    <div mat-card-avatar class="header-image" [style.background-image]="thumbnailImageURL()"></div>
     <mat-card-title>{{content.attributes.title}}</mat-card-title>
     <mat-card-subtitle>{{content.attributes.category}}</mat-card-subtitle>
   </mat-card-header>
-  <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu">
+  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
   <mat-card-content>
     <p>
       {{content.attributes.editor}}

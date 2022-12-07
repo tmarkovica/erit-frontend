@@ -1,0 +1,50 @@
+<div class="new-content">
+
+  <!-- Title -->
+  <mat-form-field appearance="fill">
+    <mat-label>Title</mat-label>
+    <input matInput [(ngModel)]="content.data.title">
+  </mat-form-field>
+
+  <!-- dropdown -->
+  <mat-form-field appearance="fill">
+    <mat-label>Select Category</mat-label>
+    <mat-select [(ngModel)]="content.data.category">
+      <mat-option *ngFor="let category of categories" [value]="category.value">
+        {{category.viewValue}}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!-- cover_image -->
+  <div class="new-content__field">
+    <input type="file" #imageLoader name="files" title="Load File" hidden />
+    <button mat-raised-button color="primary" *ngIf="uploadImage == null" (click)="presentActionSheet(imageLoader)">Upload image</button>
+    <button mat-raised-button color="warn" *ngIf="uploadImage != null" (click)="removePic()">Remove image</button>
+    <span *ngIf="uploadImage != null">
+      <img id="checkinImage" class="image-size" [src]="uploadImage" (load)="imageLoaded()" />
+    </span>
+  </div>
+
+  <!-- document -->
+  <div class="new-content__field">
+    <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" hidden />
+    <button mat-raised-button color="primary" *ngIf="uploadedDocument == null" (click)="uploadFile(fileLoader)">Upload document</button>
+    <button mat-raised-button color="warn" *ngIf="uploadedDocument != null" (click)="removeDocument()">Remove document</button>
+    <span *ngIf="uploadedDocument != null">
+      <p>File uploaded.</p>
+    </span>
+  </div>
+
+  <!-- editor --> <!--  https://www.npmjs.com/package/@kolkov/angular-editor -->
+  <angular-editor [placeholder]="'Enter text here...'" [(ngModel)]="content.data.editor" [config]="editorConfig"></angular-editor>
+  <h2>HTML output:</h2>
+  <div class="new-content__html-output">
+    <p>{{content.data.editor}}</p>
+  </div>
+
+  <div class="new-content__field">
+    <button mat-flat-button color="primary" (click)="publish(imageLoader)">Publish</button>
+  </div>
+
+</div>

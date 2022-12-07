@@ -1,7 +1,16 @@
 <div class="index">
 
-  <ng-container *ngFor="let item of contents" class="card">
-    <app-content-card [content]="item"></app-content-card>
-  </ng-container>
+  <div class="index__cards">
+    <ng-container *ngFor="let item of contents">
+      <app-content-card [content]="item"></app-content-card>
+    </ng-container>
+  </div>
+
+  <div class="index__new-content-toggle">
+    <button mat-flat-button color="primary" *ngIf="!newContentInputsVisible" (click)="newContentInputsVisible = true">Add new content</button>
+    <button mat-flat-button color="warn" *ngIf="newContentInputsVisible" (click)="newContentInputsVisible = false">Discard</button>
+  </div>
+
+  <app-new-content *ngIf="newContentInputsVisible"></app-new-content>
 
 </div>

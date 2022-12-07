@@ -21,8 +21,10 @@
     "@angular/platform-browser": "~15.0.2",
     "@angular/platform-browser-dynamic": "~15.0.2",
     "@angular/router": "~15.0.2",
+    "@kolkov/angular-editor": "^3.0.0-beta.0",
     "@ngtools/webpack": "^15.0.2",
     "ajv": "^8.11.2",
+    "angular-froala": "^4.0.16",
     "rxjs": "~7.6.0",
     "tslib": "^2.4.1",
     "zone.js": "~0.12.0"

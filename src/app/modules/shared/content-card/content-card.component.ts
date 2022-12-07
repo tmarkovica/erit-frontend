@@ -1,5 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 import { Content } from 'src/app/interfaces/content';
+import { Formats } from 'src/app/interfaces/formats';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-content-card',
@@ -13,7 +15,20 @@ export class ContentCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.content);
   }
 
+  public thumbnailImageURL(): string {
+    const data = this.content.attributes.cover_image.data;
+    if (data == null) return 'none';
+
+    const formats: Formats = data.attributes?.formats;
+    const url: string = data.attributes?.url;
+
+    if (formats != null)
+      return `url(${environment.api_url}${formats.thumbnail.url})`;
+    else if (url != null)
+      return `url(${environment.api_url}${url})`;
+    else
+      return 'none';
+  }
 }

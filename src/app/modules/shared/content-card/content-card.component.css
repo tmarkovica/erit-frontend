@@ -1,15 +1,9 @@
-.content-card {
-  border: 2px solid rgb(24, 83, 24);
-  background-color: lightblue;
-  padding: 20px;
-}
-
 .card {
-  max-width: 400px;
   margin-bottom: 10px;
+  margin-left: 150px;
+  margin-right: 150px;
 }
 
 .header-image {
-  background-image: url('https://material.angular.io/assets/img/examples/shiba1.jpg');
   background-size: cover;
 }

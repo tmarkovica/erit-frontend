@@ -66,4 +66,8 @@ export class LoginService {
   private saveTokenToLocalStorage(token: string) {
     localStorage.setItem(this.JWT_STORAGE_KEY, token);
   }
+
+  public getAuthToken(): string {
+    return this.jwt;
+  }
 }

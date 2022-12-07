@@ -8,6 +8,9 @@ import { HttpClientModule } from '@angular/common/http';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 import { HomeComponent } from './modules/home/home.component';
 import { SharedModule } from './modules/shared/shared.module';
+import {MatButtonModule} from '@angular/material/button';
+import { AngularEditorModule } from '@kolkov/angular-editor';
+import { IndexModule } from './modules/index/index.module';
 
 @NgModule({
   declarations: [
@@ -20,7 +23,10 @@ import { SharedModule } from './modules/shared/shared.module';
     AppRoutingModule,
     HttpClientModule,
     NoopAnimationsModule,
-    SharedModule
+    SharedModule,
+    MatButtonModule,
+    /* AngularEditorModule,
+    IndexModule */
   ],
   providers: [],
   bootstrap: [AppComponent]
