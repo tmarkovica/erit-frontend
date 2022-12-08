@@ -4,11 +4,17 @@
     <mat-card-title>{{content.attributes.title}}</mat-card-title>
     <mat-card-subtitle>{{content.attributes.category}}</mat-card-subtitle>
   </mat-card-header>
-  <!-- <img mat-card-image src="https://material.angular.io/assets/img/examples/shiba2.jpg" alt="Photo of a Shiba Inu"> -->
   <mat-card-content>
-    <p>
-      {{content.attributes.editor}}
-    </p>
+    <div *ngIf="documentAttached()">
+      <h3>File: <a [href]="fileURL()" target="_blank">{{documentName()}}</a></h3>
+    </div>
+
+    <div *ngIf="editorHasData()">
+      <h3>Editor</h3>
+      <p>
+        {{content.attributes.editor}}
+      </p>
+    </div>
   </mat-card-content>
   <mat-card-actions>
     <button mat-button>LIKE</button>

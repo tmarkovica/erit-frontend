@@ -32,7 +32,8 @@ export class NewContentComponent {
       category: '',
       editor: ''
     },
-    "files.cover_image": null
+    "files.cover_image": null,
+    "files.document": null
   }
 
   constructor(
@@ -165,19 +166,11 @@ export class NewContentComponent {
     }
   }
 
-  public publish(imageLoader) {
-    var imageFile: File = imageLoader.files[0];
+  public publish(imageLoader, fileLoader) {
+    this.content['files.cover_image'] = imageLoader.files[0];
+    this.content['files.document'] = fileLoader.files[0];
 
-    this.content['files.cover_image'] = imageFile;
-
-    let formData = new FormData();
-
-    formData.append('data', JSON.stringify(this.content.data));
-    formData.append('files.cover_image', imageFile);
-
-    console.log(formData);
-
-    this._eritContent.postContent(formData).then((posted: boolean) => {
+    this._eritContent.postContent(this.content).then((posted: boolean) => {
       console.log("Content posted: ", posted);
       if (posted)
         this.openNotifyDialog();
@@ -200,6 +193,7 @@ export class NewContentComponent {
     this.content.data.category = '';
     this.content.data.editor = '';
     this.content['files.cover_image'] = null;
+    this.content['files.document'] = null;
     this.removePic();
     this.removeDocument();
     this.contentDiscarded.emit();

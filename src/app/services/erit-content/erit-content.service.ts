@@ -4,6 +4,7 @@ import { environment } from 'src/environments/environment';
 import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginService } from '../login/login.service';
 import { Content } from 'src/app/interfaces/content';
+import { ContentPost } from 'src/app/interfaces/content-post';
 
 @Injectable({
   providedIn: 'root'
@@ -36,7 +37,10 @@ export class EritContentService {
     });
   }
 
-  public postContent(data: FormData): Promise<boolean> {
+  public postContent(content: ContentPost): Promise<boolean> {
+
+    const data = this.createFormData(content);
+
     return this.http.post(`${environment.api_url}/api/contents`, data, this.options).toPromise().then((res: any) => {
       console.log(res);
       this.getContent();
@@ -45,5 +49,15 @@ export class EritContentService {
       console.log(err);
       return false;
     });
+  }
+
+  private createFormData(content: ContentPost): FormData {
+    let formData = new FormData();
+
+    formData.append('data', JSON.stringify(content.data));
+    formData.append('files.cover_image', content['files.cover_image']);
+    formData.append('files.document', content['files.document']);
+
+    return formData;
   }
 }

@@ -15,6 +15,7 @@ export class ContentCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.content);
   }
 
   public thumbnailImageURL(): string {
@@ -30,5 +31,22 @@ export class ContentCardComponent implements OnInit {
       return `url(${environment.api_url}${url})`;
     else
       return 'none';
+  }
+
+  public fileURL(): string {
+    if (this.content.attributes.document.data == null) return '';
+    return environment.api_url + this.content.attributes.document.data?.attributes.url;
+  }
+
+  public documentAttached(): boolean {
+    return this.content.attributes.document.data == null ? false : true;
+  }
+
+  public editorHasData(): boolean {
+    return this.content.attributes.editor?.length > 0 ? true : false;
+  }
+
+  public documentName(): string {
+    return this.content.attributes.document.data?.attributes.name;
   }
 }

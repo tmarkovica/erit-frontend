@@ -4,5 +4,6 @@ export interface ContentPost {
     category: string
     editor: string,
   },
-  "files.cover_image": File
+  "files.cover_image": File,
+  "files.document": File
 }
