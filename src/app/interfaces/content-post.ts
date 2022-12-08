@@ -1,9 +1,8 @@
 export interface ContentPost {
   data: {
     title: string,
-    category: string,
-    cover_image: File,
-    document: File,
+    category: string
     editor: string,
-  }
+  },
+  "files.cover_image": File
 }

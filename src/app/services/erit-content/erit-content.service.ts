@@ -1,10 +1,9 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { environment } from 'src/environments/environment';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
 import { LoginService } from '../login/login.service';
 import { Content } from 'src/app/interfaces/content';
-import { ContentPost } from 'src/app/interfaces/content-post';
 
 @Injectable({
   providedIn: 'root'
@@ -37,11 +36,14 @@ export class EritContentService {
     });
   }
 
-  public postContent(content: ContentPost) {
-    this.http.post(`${environment.api_url}/api/contents`, content, this.options).subscribe((res: any) => {
+  public postContent(data: FormData): Promise<boolean> {
+    return this.http.post(`${environment.api_url}/api/contents`, data, this.options).toPromise().then((res: any) => {
       console.log(res);
-    }, err => {
+      this.getContent();
+      return true;
+    }).catch(err => {
       console.log(err);
+      return false;
     });
   }
 }

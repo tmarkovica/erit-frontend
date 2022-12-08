@@ -3,7 +3,7 @@ import { CommonModule } from '@angular/common';
 import { ContentCardComponent } from './content-card/content-card.component';
 import {MatCardModule} from '@angular/material/card';
 import {MatButtonModule} from '@angular/material/button';
-import { NewContentDialogComponent } from './new-content-dialog/new-content-dialog.component';
+import { NotifyDialogComponent } from './notify-dialog/notify-dialog.component';
 import {MatDialogModule} from '@angular/material/dialog';
 import {MatInputModule} from '@angular/material/input';
 import {MatSelectModule} from '@angular/material/select';
@@ -14,7 +14,7 @@ import { FormsModule } from '@angular/forms';
 
 
 @NgModule({
-  declarations: [ContentCardComponent, NewContentDialogComponent, NewContentComponent],
+  declarations: [ContentCardComponent, NotifyDialogComponent, NewContentComponent],
   imports: [
     CommonModule,
     MatCardModule,
@@ -26,7 +26,7 @@ import { FormsModule } from '@angular/forms';
     AngularEditorModule,
     FormsModule
   ],
-  exports: [ContentCardComponent, NewContentDialogComponent, NewContentComponent],
+  exports: [ContentCardComponent, NotifyDialogComponent, NewContentComponent],
   schemas: [CUSTOM_ELEMENTS_SCHEMA]
 })
 export class SharedModule { }

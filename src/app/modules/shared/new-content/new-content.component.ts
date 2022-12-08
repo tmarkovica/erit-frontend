@@ -1,7 +1,8 @@
-import { Binary } from '@angular/compiler';
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+import { MatDialog } from '@angular/material/dialog';
 import { ContentPost } from 'src/app/interfaces/content-post';
 import { EritContentService } from 'src/app/services/erit-content/erit-content.service';
+import { NotifyDialogComponent } from '../notify-dialog/notify-dialog.component';
 import { wysiwygConfig } from './wysiwyg-config';
 
 @Component({
@@ -29,18 +30,15 @@ export class NewContentComponent {
     data: {
       title: '',
       category: '',
-      cover_image: null,
-      document: null,
       editor: ''
-    }
+    },
+    "files.cover_image": null
   }
 
   constructor(
-    private _eritContent: EritContentService
+    private _eritContent: EritContentService,
+    private dialog: MatDialog
     ) {}
-
-  onNoClick(): void {
-  }
 
   // load image
   presentActionSheet(fileLoader) {
@@ -147,7 +145,6 @@ export class NewContentComponent {
     this.uploadedDocument = null;
   }
 
-  // checkout https://stackoverflow.com/questions/69099204/reading-binary-file-by-parts
   // load file
   uploadFile(fileLoader) {
     fileLoader.click();
@@ -168,40 +165,43 @@ export class NewContentComponent {
     }
   }
 
-  public publish(fileLoader) {
-    console.log(this.content.data);
+  public publish(imageLoader) {
+    var imageFile: File = imageLoader.files[0];
 
+    this.content['files.cover_image'] = imageFile;
 
-    const image_Base64 = document.getElementById('checkinImage')?.getAttribute('src');
+    let formData = new FormData();
 
-    //console.log(image_Base64);
+    formData.append('data', JSON.stringify(this.content.data));
+    formData.append('files.cover_image', imageFile);
 
-    let binary = "";
-    for (var i = 0; i < image_Base64?.length; i++) {
-        binary += image_Base64[i].charCodeAt(0).toString(2) + " ";
-    }
-    //console.log(binary);
+    console.log(formData);
 
-    var file: File = fileLoader.files[0];
-
-    const f: File = new File([image_Base64 as BlobPart], file.name)
-
-    console.log(file.name);
-    console.log(file.stream);
-
-
-
-    console.log(fileLoader.files[0]);
-
-    this.content.data.cover_image = f;
-
-    this._eritContent.postContent(this.content);
-    //const b: BinaryData = ArrayBuffer(binary)
-
-    //this.content.data.cover_image = b;
-
-
+    this._eritContent.postContent(formData).then((posted: boolean) => {
+      console.log("Content posted: ", posted);
+      if (posted)
+        this.openNotifyDialog();
+    });
   }
 
-  // https://stackoverflow.com/questions/70855816/conversion-of-the-binary-data-string-of-image-file-to-a-blob
+  private openNotifyDialog() {
+    const dialogRef = this.dialog.open(NotifyDialogComponent);
+
+    dialogRef.afterClosed().subscribe(result => {
+      console.log('The dialog was closed');
+      this.clearFields();
+    });
+  }
+
+  @Output() contentDiscarded: EventEmitter<void> = new EventEmitter();
+
+  private clearFields() {
+    this.content.data.title = '';
+    this.content.data.category = '';
+    this.content.data.editor = '';
+    this.content['files.cover_image'] = null;
+    this.removePic();
+    this.removeDocument();
+    this.contentDiscarded.emit();
+  }
 }

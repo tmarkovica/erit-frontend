@@ -11,6 +11,6 @@
     <button mat-flat-button color="warn" *ngIf="newContentInputsVisible" (click)="newContentInputsVisible = false">Discard</button>
   </div>
 
-  <app-new-content *ngIf="newContentInputsVisible"></app-new-content>
+  <app-new-content *ngIf="newContentInputsVisible" (contentDiscarded)="newContentInputsVisible = false"></app-new-content>
 
 </div>
