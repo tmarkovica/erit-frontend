@@ -5,9 +5,17 @@
   <form class="form" [formGroup]="form">
 
     <mat-form-field class="full-width">
-      <mat-label>Name</mat-label>
-      <input matInput placeholder="Enter Name" value="" formControlName="name">
-      <mat-error *ngIf="form.controls.name.hasError('required')" [errorStateMatcher]="matcher">
+      <mat-label>Username</mat-label>
+      <input matInput placeholder="Enter Username" value="" formControlName="username">
+      <mat-error *ngIf="form.controls.username.hasError('required')" [errorStateMatcher]="matcher">
+        Name required.
+      </mat-error>
+    </mat-form-field>
+
+    <mat-form-field class="full-width">
+      <mat-label>First Name</mat-label>
+      <input matInput placeholder="Enter First Name" value="" formControlName="firstName">
+      <mat-error *ngIf="form.controls.firstName.hasError('required')" [errorStateMatcher]="matcher">
         Name required.
       </mat-error>
     </mat-form-field>

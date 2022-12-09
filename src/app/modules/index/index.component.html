@@ -1,5 +1,16 @@
 <div class="index">
 
+  <div class="index__header">
+    <div class="index__header__wrapper">
+      <div class="index__header__user">
+        <h2>Welcome <b>{{username}}</b></h2>
+        <p *ngIf="userIsAdmin">This user has admin rights.</p>
+      </div>
+      <button mat-flat-button color="warn" (click)="logout()">Logout</button>
+    </div>
+  </div>
+
+
   <div class="index__cards">
     <ng-container *ngFor="let item of contents">
       <app-content-card [content]="item"></app-content-card>

@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { AbstractControl, FormBuilder, FormControl, FormGroup, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
+import { RegistrationData } from 'src/app/interfaces/registration-data';
+import { RegistrationService } from 'src/app/services/registration/registration.service';
 
 @Component({
   selector: 'app-registration',
@@ -12,11 +14,13 @@ export class RegistrationComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
+    private _registration: RegistrationService
     ) {}
 
   ngOnInit(): void {
     this.form = this.fb.group({
-      name: [null, Validators.required],
+      username: [null, Validators.required],
+      firstName: [null, Validators.required],
       lastName: [null, Validators.required],
       email: ['', [Validators.email, Validators.required]],
       password: [null, [Validators.minLength(6), Validators.required]],
@@ -27,8 +31,8 @@ export class RegistrationComponent implements OnInit {
   }
 
   public register() {
-    console.log(this.form.value);
-    console.log(`form valid: ${this.form.valid}`);
+    if (!this.form.valid) return;
+    this._registration.registration(this.form.value);
   }
 
   private controlValuesAreEqual(controlNameA: string, controlNameB: string): ValidatorFn {

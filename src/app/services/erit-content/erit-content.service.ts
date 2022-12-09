@@ -30,7 +30,6 @@ export class EritContentService {
 
   private getContent() {
     this.http.get(`${this.api_url}/api/contents/?populate=document,cover_image`, this.options).subscribe((res: { "data": Content[]}) => {
-      console.log(res.data)
       this.contents.next(res.data);
     }, err => {
       console.log(err);

@@ -8,6 +8,7 @@ export interface LoginResponse {
     confirmed: boolean,
     blocked: boolean,
     createdAt: string,
-    updatedAt: string
+    updatedAt: string,
+    admin: boolean
   }
 }

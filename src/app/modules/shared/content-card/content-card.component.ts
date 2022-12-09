@@ -15,7 +15,6 @@ export class ContentCardComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.content);
   }
 
   public thumbnailImageURL(): string {

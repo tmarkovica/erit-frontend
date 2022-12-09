@@ -1,8 +1,10 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
+import { BehaviorSubject } from 'rxjs';
 import { LoginCredentials } from 'src/app/interfaces/login-credentials';
 import { LoginResponse } from 'src/app/interfaces/login-response';
+import { RegistrationData2 } from 'src/app/interfaces/registration-data';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -11,9 +13,14 @@ import { environment } from 'src/environments/environment';
 export class LoginService {
 
   private api_url = environment.api_url;
+
   private JWT_STORAGE_KEY = "token";
+  private USER_ID_STORAGE_KEY = "userId";
   private jwt: string = null;
-  private username: string;
+  public username: BehaviorSubject<string> = new BehaviorSubject('');
+  public admin: BehaviorSubject<boolean> = new BehaviorSubject(false);
+  public userID: number;
+
   private loggedIn: boolean = false;
 
   constructor(
@@ -27,6 +34,8 @@ export class LoginService {
     this.loadTokenFromLocalStorage();
     if (this.jwt != null) {
       this.loggedIn = true;
+      this.loadUserIdFromLocalStorage();
+      this.getUser(this.userID);
     }
     else {
       this.router.navigate(['']);
@@ -41,19 +50,37 @@ export class LoginService {
     });
   }
 
+  private getUser(id: number) {
+    const options = {
+      headers: new HttpHeaders({
+        "Authorization": `Bearer ${this.getAuthToken()}`
+      })
+    };
+    this.http.get(`${this.api_url}/api/users/${id}`, options).subscribe((res: RegistrationData2) => {
+      this.username.next(res.username);
+      this.admin.next(res.admin);
+    }, err => {
+      console.log(err);
+    });
+  }
+
   public isLoggedIn(): boolean { return this.loggedIn; }
 
   public logout() {
     this.loggedIn = false;
     this.jwt = null;
-    this.username = '';
+    this.username.next('');
     localStorage.removeItem(this.JWT_STORAGE_KEY);
+    localStorage.removeItem(this.USER_ID_STORAGE_KEY);
     this.router.navigate(['']);
   }
 
   private loginSuccessful(response: LoginResponse) {
     this.saveTokenToLocalStorage(response.jwt);
-    this.username = response.user.username;
+    this.username.next(response.user.username);
+    this.userID = response.user.id;
+    this.saveUserIdToLocalStorage(this.userID);
+    this.admin.next(response.user.admin);
     this.loggedIn = true;
     this.jwt = response.jwt;
     this.router.navigate(['index']);
@@ -65,6 +92,14 @@ export class LoginService {
 
   private saveTokenToLocalStorage(token: string) {
     localStorage.setItem(this.JWT_STORAGE_KEY, token);
+  }
+
+  private loadUserIdFromLocalStorage() {
+    this.userID = Number.parseInt(localStorage.getItem(this.USER_ID_STORAGE_KEY));
+  }
+
+  private saveUserIdToLocalStorage(id: number) {
+    localStorage.setItem(this.USER_ID_STORAGE_KEY, id.toString());
   }
 
   public getAuthToken(): string {
