@@ -17,7 +17,14 @@
     </div>
   </mat-card-content>
   <mat-card-actions>
-    <button mat-button>LIKE</button>
-    <button mat-button>SHARE</button>
+
+    <p *ngIf="contentApprovedByAdmin()"><b>APPROVED</b></p>
+
+    <!-- If content is not approved, add controls to approve it -->
+    <ng-container *ngIf="!contentApprovedByAdmin()">
+      <button mat-flat-button color="primary" (click)="approveThisContent()">Approve</button>
+      <button mat-flat-button color="warn" (click)="discardThisContent()">Discard</button>
+    </ng-container>
+
   </mat-card-actions>
 </mat-card>

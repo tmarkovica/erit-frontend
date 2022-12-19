@@ -18,21 +18,21 @@
 
   <!-- cover_image -->
   <div class="new-content__field">
-    <input type="file" #imageLoader name="files" title="Load File" hidden />
-    <button mat-raised-button color="primary" *ngIf="uploadImage == null" (click)="presentActionSheet(imageLoader)">Upload image</button>
-    <button mat-raised-button color="warn" *ngIf="uploadImage != null" (click)="removePic()">Remove image</button>
-    <span *ngIf="uploadImage != null">
-      <img id="checkinImage" class="image-size" [src]="uploadImage" (load)="imageLoaded()" />
-    </span>
+    <input type="file" #imageLoader name="files" title="Load File" hidden accept="image/*" (change)="imageSelected($event)" />
+    <button mat-raised-button color="primary" *ngIf="uploadedImage == null" (click)="imageLoader.click()">Upload image</button>
+    <button mat-raised-button color="warn" *ngIf="uploadedImage != null" (click)="removeImage()">Remove image</button>
+    <div *ngIf="uploadedImage != null">
+      <img [src]="uploadedImage" alt="" class="image-size" >
+    </div>
   </div>
 
   <!-- document -->
   <div class="new-content__field">
-    <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" hidden />
-    <button mat-raised-button color="primary" *ngIf="uploadedDocument == null" (click)="uploadFile(fileLoader)">Upload document</button>
+    <input type="file" id="fileLoader" #fileLoader name="files" title="Load File" hidden (change)="documentSelected($event)" />
+    <button mat-raised-button color="primary" *ngIf="uploadedDocument == null" (click)="fileLoader.click()">Upload document</button>
     <button mat-raised-button color="warn" *ngIf="uploadedDocument != null" (click)="removeDocument()">Remove document</button>
     <span *ngIf="uploadedDocument != null">
-      <p>File uploaded.</p>
+      <p><b>{{uploadedDocument}}</b></p>
     </span>
   </div>
 

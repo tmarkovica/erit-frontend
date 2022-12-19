@@ -2,9 +2,9 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { BehaviorSubject } from 'rxjs';
-import { LoginCredentials } from 'src/app/interfaces/login-credentials';
-import { LoginResponse } from 'src/app/interfaces/login-response';
-import { RegistrationData2 } from 'src/app/interfaces/registration-data';
+import { LoginCredentials } from 'src/app/interfaces/user/login-credentials';
+import { LoginResponse } from 'src/app/interfaces/user/login-response';
+import { MeResponse } from 'src/app/interfaces/user/me-response';
 import { environment } from 'src/environments/environment';
 
 @Injectable({
@@ -35,7 +35,7 @@ export class LoginService {
     if (this.jwt != null) {
       this.loggedIn = true;
       this.loadUserIdFromLocalStorage();
-      this.getUser(this.userID);
+      this.getRole();
     }
     else {
       this.router.navigate(['']);
@@ -50,15 +50,16 @@ export class LoginService {
     });
   }
 
-  private getUser(id: number) {
+  private getRole() {
     const options = {
       headers: new HttpHeaders({
         "Authorization": `Bearer ${this.getAuthToken()}`
       })
     };
-    this.http.get(`${this.api_url}/api/users/${id}`, options).subscribe((res: RegistrationData2) => {
+    this.http.get(`${this.api_url}/api/users/me?populate=role`, options).subscribe((res: MeResponse) => {
       this.username.next(res.username);
-      this.admin.next(res.admin);
+      if (res.role.name === 'Admin')
+        this.admin.next(true);
     }, err => {
       console.log(err);
     });
@@ -77,12 +78,11 @@ export class LoginService {
 
   private loginSuccessful(response: LoginResponse) {
     this.saveTokenToLocalStorage(response.jwt);
-    this.username.next(response.user.username);
     this.userID = response.user.id;
     this.saveUserIdToLocalStorage(this.userID);
-    this.admin.next(response.user.admin);
     this.loggedIn = true;
     this.jwt = response.jwt;
+    this.getRole();
     this.router.navigate(['index']);
   }
 

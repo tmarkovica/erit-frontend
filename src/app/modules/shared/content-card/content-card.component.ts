@@ -1,6 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { Content } from 'src/app/interfaces/content';
-import { Formats } from 'src/app/interfaces/formats';
+import { Content } from 'src/app/interfaces/content/content';
+import { Formats } from 'src/app/interfaces/content/formats';
+import { EritContentService } from 'src/app/services/erit-content/erit-content.service';
 import { environment } from 'src/environments/environment';
 
 @Component({
@@ -12,7 +13,9 @@ export class ContentCardComponent implements OnInit {
 
   @Input() public content: Content;
 
-  constructor() { }
+  constructor(
+    private _eritContent: EritContentService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -47,5 +50,20 @@ export class ContentCardComponent implements OnInit {
 
   public documentName(): string {
     return this.content.attributes.document.data?.attributes.name;
+  }
+
+  public contentApprovedByAdmin(): boolean {
+    if (this.content.attributes.approval?.data == null)
+      return false;
+    else
+      return this.content.attributes.approval?.data?.attributes.approved;
+  }
+
+  public approveThisContent() {
+    this._eritContent.approveContent(this.content.id);
+  }
+
+  public discardThisContent() {
+    this._eritContent.discardContent(this.content.id);
   }
 }

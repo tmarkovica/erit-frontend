@@ -4,17 +4,24 @@
     <div class="index__header__wrapper">
       <div class="index__header__user">
         <h2>Welcome <b>{{username}}</b></h2>
-        <p *ngIf="userIsAdmin">This user has admin rights.</p>
+        <p *ngIf="userIsAdmin">You have admin rights.</p>
       </div>
-      <button mat-flat-button color="warn" (click)="logout()">Logout</button>
+      <button mat-stroked-button color="warn" (click)="logout()">Logout</button>
     </div>
   </div>
 
 
   <div class="index__cards">
-    <ng-container *ngFor="let item of contents">
+
+    <ng-container *ngFor="let item of contentsApproved">
       <app-content-card [content]="item"></app-content-card>
     </ng-container>
+
+    <ng-container *ngFor="let item of contentsWaitingApproval">
+      <app-content-card [content]="item"></app-content-card>
+    </ng-container>
+
+
   </div>
 
   <div class="index__new-content-toggle">
@@ -22,6 +29,6 @@
     <button mat-flat-button color="warn" *ngIf="newContentInputsVisible" (click)="newContentInputsVisible = false">Discard</button>
   </div>
 
-  <app-new-content *ngIf="newContentInputsVisible" (contentDiscarded)="newContentInputsVisible = false"></app-new-content>
+  <app-new-content *ngIf="newContentInputsVisible" (contentDiscarded)="newContentInputsVisible = false" id="new-content"></app-new-content>
 
 </div>

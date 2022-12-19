@@ -1,5 +1,5 @@
 export const environment = {
-  production: true,
-  api_url: "https://erit-backend.herokuapp.com/",
-  token: '26b833448e300ddc72626f2f3ca6f94cb7af7bf61fb8db64daa3bfc84f41c501f5059e7c7613d6101043ea1762409e27d8be9f1eb019ed9cc2fe693a7a462af2d578d372cb973a0cfd82f7fd14891c0179ac0c4c26a5721fe7668af46d1ddc3e446208b687ed1d9421b8e8b9f843b3df7b1e0f34fe8f873aaf1e95e17d5854eb'
+  production: false,
+  erit_frontend_api_token: "5006b63882e3fed3eb802be311ed08cf9bcba698d22104bd112b176fc47430f76606a5e846fa59f0d9f81b5d0bbb55d32e68aa923e7b59e91634345261fcfd287363cef6eb516a987cd97bdfbfa6f25fe7ca0401f7c678cb0ceada8fcd3d5cb5d391521938d066f0d8878aafefc20ebc1807b97ecb00a49f12168cdf470dbd50",
+  api_url: "https://erit-backend.herokuapp.com"
 };

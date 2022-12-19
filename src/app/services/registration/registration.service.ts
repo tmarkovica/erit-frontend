@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { LoginCredentials } from 'src/app/interfaces/login-credentials';
-import { RegistrationData } from 'src/app/interfaces/registration-data';
+import { LoginCredentials } from 'src/app/interfaces/user/login-credentials';
+import { RegistrationData } from 'src/app/interfaces/user/registration-data';
 import { environment } from 'src/environments/environment';
 import { LoginService } from '../login/login.service';
 
@@ -26,7 +26,6 @@ export class RegistrationService {
     }
 
     this.http.post(`${environment.api_url}/api/users`, dataToSend).subscribe((res: any) => {
-      console.log(res);
       const loginData: LoginCredentials = {
         identifier: dataToSend.username,
         password: dataToSend.password

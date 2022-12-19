@@ -9,7 +9,15 @@ export interface Content {
     updatedAt: string,
     publishedAt: string,
     editor: string,
-    document: MediaDocument
-    cover_image: MediaDocument
+    document: MediaDocument,
+    cover_image: MediaDocument,
+    approval: {
+      data: {
+        id: 2,
+        attributes: {
+          approved: boolean,
+        }
+      }
+    }
   }
 }

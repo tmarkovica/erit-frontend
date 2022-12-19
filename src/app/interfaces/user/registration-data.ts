@@ -6,12 +6,3 @@ export interface RegistrationData {
     "password": string,
     "role": number
 }
-
-export interface RegistrationData2 {
-    id: number,
-    username: string,
-    firstName: string,
-    lastName: string,
-    email: string,
-    admin: boolean
-}
